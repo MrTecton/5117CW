@@ -9,6 +9,9 @@ import java.util.Scanner;
 public class PolicingData {
 
 	static Scanner Input = new Scanner(System.in);
+	public static int successful = 0;
+	public static int partsuccessful = 0;
+	public static int unsuccessful = 0;
 	
 	public static void main(String[] args) throws FileNotFoundException {
 
@@ -22,7 +25,21 @@ public class PolicingData {
 		System.out.println("M = Merseyside");
 		System.out.println("");
 		
-		selectionStation = Input.nextLine().toLowerCase();
+		selectionStation = Input.nextLine();
+		
+		if (selectionStation.equals("m") || selectionStation.equals("M")) {
+			
+			selectionStation = "merseyside";
+			
+		} else if (selectionStation.equals("c") || selectionStation.equals("C")) {
+
+			selectionStation = "cheshire";
+			
+		} else {
+			
+			System.out.println("Incorrect Arguments");
+		}
+		
 		System.out.println("");
 		
 		System.out.println("Please Choose An Date Below: ");
@@ -33,13 +50,6 @@ public class PolicingData {
 		
 		selectionDate = Input.nextLine().toLowerCase();
 		System.out.println();
-		
-		if (selectionStation == "m") {
-			selectionStation = "merseyside";
-		} else {
-
-			selectionStation = "cheshire";
-		}
 		
 		String fileName = "src/2018-" + selectionDate + "/2018-" + selectionDate + "-" + selectionStation + "-stop-and-search.csv" ;
 		
@@ -129,28 +139,23 @@ public class PolicingData {
 							System.out.println();
 						}
 						
+						if (PDA.data[12].contains("arrest") && PDA.data[13].contains("TRUE") ) {
+							successful = successful + 1;
+						} else if (PDA.data[12].contains("arrest") || PDA.data[12].contains("caution") || PDA.data[12].contains("penalty") && PDA.data[13].contains("FALSE") ) {
+							partsuccessful = partsuccessful + 1;
+						} else if (PDA.data[12].contains("no further action") ) {
+							unsuccessful = unsuccessful + 1;
+						}
+						
+						System.out.println("Detailed Stats:");
+						System.out.println("Amount of Successful Arrests: " + successful);
+						System.out.println("Amount of Partially Successful Arrests: " + partsuccessful);
+						System.out.println("Amount of Unsuccessful Arrests: " + unsuccessful);
+						System.out.println();
 						
 				} else {
 					
 				}
-				
-				
-				/* System.out.print(Count + " : ");
-				System.out.print(data[0] + " : ");
-				System.out.print(data[1] + " : ");
-				System.out.print(data[2] + " : ");
-				System.out.print(data[3] + " : ");
-				System.out.print(data[4] + " : ");
-				System.out.print(data[5] + " : ");
-				System.out.print(data[6] + " : ");
-				System.out.print(data[7] + " : ");
-				System.out.print(data[8] + " : ");
-				System.out.print(data[9] + " : ");
-				System.out.print(data[10] + " : ");
-				System.out.print(data[11] + " : ");
-				System.out.print(data[12] + " : ");
-				System.out.print(data[13] + " : ");
-				System.out.printf(data[14] + " \n"); */
 				
 			}
 		} catch (IOException e) {

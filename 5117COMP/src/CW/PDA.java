@@ -18,9 +18,4 @@ public class PDA {
 	//String Variables
 	static String csvSplit = ",";
 
-	//Variable Counters
-	static int successful = 0;
-	static int partsuccessful = 0;
-	static int unsuccessful = 0;
-
 }
